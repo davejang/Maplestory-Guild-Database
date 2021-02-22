@@ -61,6 +61,7 @@ def extract_member_info(member_list):
 
     name = result_soup.select_one('#user-profile > section > div > div.col-lg-8 > h3 > b').get_text()
     level = result_soup.select_one('#user-profile > section > div > div.col-lg-8 > div.user-summary > ul > li:nth-child(1)').get_text()
+    level = re.findall("\d+", str(level))
     user_class = result_soup.select_one('#user-profile > section > div > div.col-lg-8 > div.user-summary > ul > li:nth-child(2)').get_text()
     if result_soup.select_one('#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(1) > section > div > div > div > h1') is not None:
       muleung_max = result_soup.select_one('#app > div.card.border-bottom-0 > div > section > div.row.text-center > div:nth-child(1) > section > div > div > div > h1').get_text()
@@ -77,7 +78,7 @@ def extract_member_info(member_list):
       muleung_recent2 = ['0']
       muleung_recent_date = '기록없음'
     
-    member_information_list.append([name,level,user_class]+muleung_max2+muleung_recent2+[muleung_recent_date])
+    member_information_list.append([name]+level+[user_class]+muleung_max2+muleung_recent2+[muleung_recent_date])
 
     print(f'길드원 정보 추출중..{i+1}/{len(member_list)}')
   return member_information_list
