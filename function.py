@@ -1,11 +1,14 @@
 import requests
 import re
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+from termcolor import colored
 
 URL = "https://maple.gg/guild/luna/찹찹"
 MEMBER_INFO = "https://maple.gg/u/"
+member_information_list = []
 
 # chrome driver setting
 chrome_options = Options()
@@ -51,7 +54,6 @@ def member_search():
 
 # memeber_information_extract_function
 def extract_member_info(member_list):
-  member_information_list = []
   for i in range(len(member_list)):
     member_name = member_list[i][0]
     member_url = MEMBER_INFO + str(member_name)
@@ -80,6 +82,9 @@ def extract_member_info(member_list):
     
     member_information_list.append([name]+level+[user_class]+muleung_max2+muleung_recent2+[muleung_recent_date])
 
-    print(f'길드원 정보 추출중..{i+1}/{len(member_list)}')
+    print(colored(f'길드원 정보 추출중..{i+1}/{len(member_list)}','green'))
+    time.sleep(0.25)
   return member_information_list
+
+
 

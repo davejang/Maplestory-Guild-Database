@@ -1,6 +1,6 @@
 from function import member_search
 from function import extract_member_info
-
+from termcolor import colored
 import openpyxl
 
 # Save to Excel File
@@ -14,4 +14,4 @@ for i in range(0,len(member_list),1):
   sheet.append([member_info[i][0],member_info[i][1],member_info[i][2],member_info[i][3],member_info[i][4],member_info[i][5]])
 database.save('찹찹 길드원 현황.xlsx')
 
-print("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.")
+print(colored("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.",'cyan'))
