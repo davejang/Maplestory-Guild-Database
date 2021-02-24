@@ -5,14 +5,15 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from termcolor import colored
-from multiprocessing import Pool,Manager
+from multiprocessing import Manager
 import openpyxl
+import parmap
 
 URL = "https://maple.gg/guild/luna/찹찹"
 MEMBER_INFO = "https://maple.gg/u/"
 manager = Manager()
 member_information_list = manager.list()
-number = 1
+
 
 # chrome driver setting
 chrome_options = Options()
@@ -20,7 +21,6 @@ chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 
 # url response
-
 driver = webdriver.Chrome(options=chrome_options)
 driver.implicitly_wait(3)
 driver.get(URL)
@@ -85,20 +85,23 @@ def extract_member_info(member_list):
     
   member_information_list.append([name]+level+[user_class]+muleung_max2+muleung_recent2+[muleung_recent_date])
 
-  print(colored('길드원 정보 추출중..','green'))
-  time.sleep(0.25)
+  time.sleep(1)
 
-# Save to Excel 
+if __name__ == '__main__':
 
-pool = Pool(processes=4)
-pool.map(extract_member_info,member_search())
-member_info = member_information_list
+  # MultiProcessing
+  # pool = Pool(processes=4)
+  parmap.map(extract_member_info,member_search(), pm_pbar=True, pm_processes=4)
+  # pool.map(extract_member_info,member_search())
+  # pool.close
+  # pool.join
 
-database = openpyxl.Workbook()
-sheet = database.active
-sheet.append(['닉네임','레벨','직업','무릉 최고 층수','최근 무릉 기록','최근 무릉 기록 일자'])
-for i in range(0,len(member_search()),1):
-  sheet.append([member_info[i][0],member_info[i][1],member_info[i][2],member_info[i][3],member_info[i][4],member_info[i][5]])
-database.save('찹찹 길드원 현황.xlsx')
+  # Save to Excel
+  database = openpyxl.Workbook()
+  sheet = database.active
+  sheet.append(['닉네임','레벨','직업','무릉 최고 층수','최근 무릉 기록','최근 무릉 기록 일자'])
+  for i in range(0,len(member_search()),1):
+    sheet.append([member_information_list[i][0],member_information_list[i][1],  member_information_list[i][2],member_information_list[i][3],member_information_list[i][4] ,member_information_list[i][5]])
+  database.save('찹찹 길드원 현황.xlsx')
 
-print(colored("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.",'cyan'))
+  print(colored("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.",'cyan'))

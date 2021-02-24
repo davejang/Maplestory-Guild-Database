@@ -11,6 +11,8 @@ selenium = "^3.141.0"
 openpyxl = "^3.0.6"
 requests = "^2.25.1"
 termcolor = "^1.1.0"
+parmap = "^1.5.2"
+tqdm = "^4.57.0"
 
 [tool.poetry.dev-dependencies]
 
