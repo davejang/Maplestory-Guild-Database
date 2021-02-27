@@ -99,6 +99,12 @@ if __name__ == '__main__':
   try:
     database = openpyxl.load_workbook('찹찹 길드원 현황.xlsx')
     main_sheet = database["길드원 목록"]
+    main_sheet.delete_rows(1)
+    main_sheet.delete_rows(2)
+    main_sheet.delete_rows(3)
+    main_sheet.delete_rows(4)
+    main_sheet.delete_rows(5)
+    main_sheet.delete_rows(6)
     print(colored("엑셀 파일 로딩에 성공하였습니다.",'green'))
   except:
     database = openpyxl.Workbook()
