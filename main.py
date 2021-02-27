@@ -96,9 +96,16 @@ if __name__ == '__main__':
   # pool.join
 
   # Save to Excel
-  database = openpyxl.Workbook()
-  main_sheet = database.active
-  main_sheet.title = "길드원 목록"
+  try:
+    database = openpyxl.load_workbook('찹찹 길드원 현황.xlsx')
+    main_sheet = database.active
+    print(colored("엑셀 파일 로딩에 성공하였습니다.",'green'))
+  except:
+    database = openpyxl.Workbook()
+    main_sheet = database.active
+    main_sheet.title = "길드원 목록"
+    print(colored("엑셀 파일이 존재하지 않습니다. 새 파일을 생성합니다.",'yellow'))
+
   yellowFill = openpyxl.styles.PatternFill(start_color='FFFFFF00',end_color='FFFFFF00',fill_type='solid')
   header_1 = main_sheet['A1']
   header_2 = main_sheet['B1']
