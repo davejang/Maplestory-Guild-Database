@@ -96,13 +96,13 @@ if __name__ == '__main__':
   # pool.join
 
   # Save to Excel
-  try:
+  try: # Loading and Initiallize Data
     database = openpyxl.load_workbook('찹찹 길드원 현황.xlsx')
     main_sheet = database["길드원 목록"]
     database.remove(main_sheet)
     main_sheet = database.create_sheet("길드원 목록", 0)
     print(colored("엑셀 파일 로딩에 성공하였습니다.",'green'))
-  except:
+  except: # Create New File
     database = openpyxl.Workbook()
     main_sheet = database.active
     main_sheet.title = "길드원 목록"
