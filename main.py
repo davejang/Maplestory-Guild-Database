@@ -98,27 +98,13 @@ if __name__ == '__main__':
   # Save to Excel
   try:
     database = openpyxl.load_workbook('찹찹 길드원 현황.xlsx')
-    main_sheet = database.active
+    main_sheet = database["길드원 목록"]
     print(colored("엑셀 파일 로딩에 성공하였습니다.",'green'))
   except:
     database = openpyxl.Workbook()
     main_sheet = database.active
     main_sheet.title = "길드원 목록"
     print(colored("엑셀 파일이 존재하지 않습니다. 새 파일을 생성합니다.",'yellow'))
-
-  yellowFill = openpyxl.styles.PatternFill(start_color='FFFFFF00',end_color='FFFFFF00',fill_type='solid')
-  header_1 = main_sheet['A1']
-  header_2 = main_sheet['B1']
-  header_3 = main_sheet['C1']
-  header_4 = main_sheet['D1']
-  header_5 = main_sheet['E1']
-  header_6= main_sheet['F1']
-  header_1.fill = yellowFill
-  header_2.fill = yellowFill
-  header_3.fill = yellowFill
-  header_4.fill = yellowFill
-  header_5.fill = yellowFill
-  header_6.fill = yellowFill
   
   main_sheet.append(['닉네임','레벨','직업','무릉 최고 층수','최근 무릉 기록','최근 무릉 기록 일자'])
   for i in range(0,len(member_search()),1):
