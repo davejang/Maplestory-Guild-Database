@@ -1,6 +1,7 @@
 import requests
 import re
 import time
+import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
@@ -112,5 +113,9 @@ if __name__ == '__main__':
   for i in range(0,len(member_search()),1):
     main_sheet.append([member_information_list[i][0],member_information_list[i][1],  member_information_list[i][2],member_information_list[i][3],member_information_list[i][4] ,member_information_list[i][5]])
   database.save('찹찹 길드원 현황.xlsx')
+  now = datetime.datetime.now()
+  now_date = now.strftime('%Y_%m_%d')
+  database.save(f'찹찹 길드원 현황_{now_date}.xlsx')
+  
 
   print(colored("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.",'green'))
