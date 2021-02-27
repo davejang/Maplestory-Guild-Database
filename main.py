@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from termcolor import colored
-from multiprocessing import Manager
+from multiprocessing import Manager #,Pool
 import openpyxl
 import parmap
 
@@ -13,7 +13,6 @@ URL = "https://maple.gg/guild/luna/찹찹"
 MEMBER_INFO = "https://maple.gg/u/"
 manager = Manager()
 member_information_list = manager.list()
-
 
 # chrome driver setting
 chrome_options = Options()
@@ -98,10 +97,25 @@ if __name__ == '__main__':
 
   # Save to Excel
   database = openpyxl.Workbook()
-  sheet = database.active
-  sheet.append(['닉네임','레벨','직업','무릉 최고 층수','최근 무릉 기록','최근 무릉 기록 일자'])
+  main_sheet = database.active
+  main_sheet.title = "길드원 목록"
+  yellowFill = openpyxl.styles.PatternFill(start_color='FFFFFF00',end_color='FFFFFF00',fill_type='solid')
+  header_1 = main_sheet['A1']
+  header_2 = main_sheet['B1']
+  header_3 = main_sheet['C1']
+  header_4 = main_sheet['D1']
+  header_5 = main_sheet['E1']
+  header_6= main_sheet['F1']
+  header_1.fill = yellowFill
+  header_2.fill = yellowFill
+  header_3.fill = yellowFill
+  header_4.fill = yellowFill
+  header_5.fill = yellowFill
+  header_6.fill = yellowFill
+  
+  main_sheet.append(['닉네임','레벨','직업','무릉 최고 층수','최근 무릉 기록','최근 무릉 기록 일자'])
   for i in range(0,len(member_search()),1):
-    sheet.append([member_information_list[i][0],member_information_list[i][1],  member_information_list[i][2],member_information_list[i][3],member_information_list[i][4] ,member_information_list[i][5]])
+    main_sheet.append([member_information_list[i][0],member_information_list[i][1],  member_information_list[i][2],member_information_list[i][3],member_information_list[i][4] ,member_information_list[i][5]])
   database.save('찹찹 길드원 현황.xlsx')
 
-  print(colored("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.",'cyan'))
+  print(colored("길드원 정보 추출에 성공하였습니다. xlsx파일로 저장합니다.",'green'))
