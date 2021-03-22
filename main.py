@@ -19,7 +19,7 @@ if(server == 0):
   print(colored("존재하지 않는 서버입니다","red"))
   quit()
 
-print(colored("길드 이름을 입력해주세요 : ","cyan"))
+print(colored("길드 이름을 입력해주세요","cyan"))
 guild_name = input()
 URL = f"https://maple.gg/guild/{server}/{guild_name}"
 MEMBER_INFO = "https://maple.gg/u/"
@@ -28,7 +28,7 @@ member_information_list = manager.list()
 
 # chrome driver setting
 chrome_options = Options()
-chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--no-sandbox') 
 chrome_options.add_argument('--disable-dev-shm-usage')
 
 # url response
